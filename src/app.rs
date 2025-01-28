@@ -1,6 +1,9 @@
-#[path = "components/progress_bar.rs"] mod progress_bar;
+#[path = "components/mod.rs"]
+mod components;
 
-use progress_bar::ProgressBar;
+use components::forms_inputs::{ControlledInput, Select, TextArea, UncontrolledInput};
+use components::iteration::Iteration;
+use components::progress_bar::ProgressBar;
 use leptos::prelude::*;
 
 #[component]
@@ -9,13 +12,34 @@ pub fn App() -> impl IntoView {
     let double_count = move || count.get() * 2;
 
     view! {
-        <button 
-            on:click=move |_| { *set_count.write() += 1; }
-            class:red=move || count.get() % 2 == 1
-        >
-            "Count: " {count}
-        </button>
-        <ProgressBar progress=count />
-        <ProgressBar progress=Signal::derive(double_count) />
+        <h1>"Learning Leptos"</h1>
+        <div>
+            <h2>"State Mangaement"</h2>
+            <button
+                on:click=move |_| {
+                    *set_count.write() += 1;
+                }
+                class:red=move || count.get() % 2 == 1
+            >
+                "Count: "
+                {count}
+            </button>
+            <br />
+            <ProgressBar progress=count />
+            <ProgressBar progress=Signal::derive(double_count) />
+        </div>
+        <br />
+        <div>
+            <h2>"Iteration"</h2>
+            <Iteration />
+        </div>
+        <br />
+        <div>
+            <h2>"Forms and Inputs"</h2>
+            <ControlledInput />
+            <UncontrolledInput />
+            <TextArea />
+            <Select />
+        </div>
     }
 }
